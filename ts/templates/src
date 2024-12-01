@@ -1,0 +1,49 @@
+import { ResultAsync } from "neverthrow"
+import path from "path"
+
+type InputFile = "test-input" | "input"
+
+function readFile(fileName: InputFile) {
+  return ResultAsync.fromSafePromise(Bun.file(path.join(import.meta.dir, fileName)).text()).map(t => t.trim().split("\n"))
+}
+
+function parseInput(data: string[]) {
+  return data.reduce((acc, row) => {
+    acc.push(...row.split(" "))
+    return acc
+  }, [] as string[])
+}
+
+export namespace Part1 {
+  export const testResult = -1
+
+  export function run(fileName: InputFile) {
+    return readFile(fileName).map(parseInput).map((arrs) => {
+      return 0
+    })
+  }
+
+}
+
+export namespace Part2 {
+  export const testResult = -1
+
+  export function run(fileName: InputFile) {
+    return readFile(fileName).map(parseInput).map((arrs) => {
+      return 0
+    })
+  }
+}
+
+if (process.env.NODE_ENV !== "test") {
+  await Part1.run("input").match(
+    console.info,
+    console.error
+  )
+
+
+  await Part2.run("input").match(
+    console.info,
+    console.error
+  )
+}
