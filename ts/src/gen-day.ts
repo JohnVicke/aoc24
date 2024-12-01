@@ -4,7 +4,7 @@ import * as fs from "fs/promises"
 
 const day = Number.parseInt(process.argv[2], 10)
 
-function fileExists(filePath: string) {
+function noFile(filePath: string) {
   return ResultAsync.fromPromise(
     fs.exists(filePath)
     , _err => "file_exists" as const).andThen(exists => {
@@ -31,13 +31,13 @@ function getInputPath(type: "src" | "test" | "input" | "test-input", day: number
 
 function writeTestInput(day: number) {
   const inputPath = getInputPath("test-input", day)
-  return fileExists(inputPath).andThen(() => writeFile(inputPath, "1 2"))
+  return noFile(inputPath).andThen(() => writeFile(inputPath, "1 2"))
 }
 
 
 function writeInput(day: number) {
   const inputPath = getInputPath("input", day)
-  return fileExists(inputPath).andThen(() => fetchInput(day)).andThen((text) => writeFile(inputPath, text))
+  return noFile(inputPath).andThen(() => fetchInput(day)).andThen((text) => writeFile(inputPath, text))
 }
 
 function getTemplate(day: number, type: "src" | "test") {
@@ -49,12 +49,12 @@ function getTemplate(day: number, type: "src" | "test") {
 
 function writeSrc(day: number) {
   const inputPath = getInputPath("src", day)
-  return fileExists(inputPath).andThen(() => getTemplate(day, "src")).andThen((src) => writeFile(inputPath, src))
+  return noFile(inputPath).andThen(() => getTemplate(day, "src")).andThen((src) => writeFile(inputPath, src))
 }
 
 function writeTest(day: number) {
   const inputPath = getInputPath("test", day)
-  return fileExists(inputPath).andThen(() => getTemplate(day, "test")).andThen((test) => writeFile(inputPath, test))
+  return noFile(inputPath).andThen(() => getTemplate(day, "test")).andThen((test) => writeFile(inputPath, test))
 }
 
 function writeDay(day: number) {
