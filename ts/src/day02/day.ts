@@ -1,5 +1,6 @@
 import { ResultAsync } from "neverthrow"
 import path from "path"
+import { submit } from "../submit"
 
 type InputFile = "test-input" | "input"
 
@@ -70,6 +71,7 @@ if (process.env.NODE_ENV !== "test") {
   if (testResult1 === Part1.testResult) {
     const result = (await Part1.run("input"))._unsafeUnwrap()
     console.log({ part1: result })
+    await submit({ day: 2, part: 1, answer: result })
   }
 
 

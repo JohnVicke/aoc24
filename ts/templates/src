@@ -36,14 +36,18 @@ export namespace Part2 {
 }
 
 if (process.env.NODE_ENV !== "test") {
-  await Part1.run("input").match(
-    console.info,
-    console.error
-  )
+  const testResult1 = (await Part1.run("test-input"))._unsafeUnwrap()
+  if (testResult1 === Part1.testResult) {
+    const result = (await Part1.run("input"))._unsafeUnwrap()
+    console.log({ part1: result })
+    await submit({ day: <day>, part: 1, answer: result })
+  }
 
 
-  await Part2.run("input").match(
-    console.info,
-    console.error
-  )
+  const testResult2 = (await Part2.run("test-input"))._unsafeUnwrap()
+  if (testResult2 === Part2.testResult) {
+    const result = (await Part2.run("input"))._unsafeUnwrap()
+    console.log({ part2: result })
+    await submit({ day: <day>, part: 2, answer: result })
+  }
 }
