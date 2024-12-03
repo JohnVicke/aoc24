@@ -1,5 +1,6 @@
 import { ResultAsync } from "neverthrow"
 import path from "path"
+import { submit } from "../submit"
 
 type InputFile = "test-input" | "input" | "test-input-2"
 
@@ -33,7 +34,7 @@ export namespace Part1 {
 
   export function run(fileName: InputFile) {
     return readFile(fileName).map(matchProg).map(reg => {
-      return reg?.reduce((acc, curr) => {
+      return reg!.reduce((acc, curr) => {
         const mul = isDoOrDont(curr) ? { a: 0, b: 0 } : mulStringToMul(curr)
         return acc + (mul.a * mul.b)
       }, 0)
@@ -47,7 +48,7 @@ export namespace Part2 {
 
   export function run(fileName: InputFile) {
     return readFile(fileName).map(matchProg).map((reg) => {
-      return reg?.reduce((acc, curr) => {
+      return reg!.reduce((acc, curr) => {
         if (isDoOrDont(curr)) {
           acc.state = curr
           return acc
@@ -66,6 +67,7 @@ if (process.env.NODE_ENV !== "test") {
   if (testResult1 === Part1.testResult) {
     const result = (await Part1.run("input"))._unsafeUnwrap()
     console.log({ part1: result })
+    await submit({ day: 3, part: 1, answer: result })
   }
 
 
@@ -73,5 +75,6 @@ if (process.env.NODE_ENV !== "test") {
   if (testResult2 === Part2.testResult) {
     const result = (await Part2.run("input"))._unsafeUnwrap()
     console.log({ part2: result })
+    await submit({ day: 3, part: 2, answer: result })
   }
 }
