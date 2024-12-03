@@ -24,7 +24,7 @@ function mulStringToMul(s: string) {
   return { a: parseInt(mul!.at(0)!), b: parseInt(mul!.at(1)!) } satisfies Mul
 }
 
-function isDoOrDont(s: string) {
+function isDoOrDont(s: string): s is ProgState {
   return s === "do()" || s === "don't()"
 }
 
@@ -49,7 +49,7 @@ export namespace Part2 {
     return readFile(fileName).map(matchProg).map((reg) => {
       return reg?.reduce((acc, curr) => {
         if (isDoOrDont(curr)) {
-          acc.state = curr as ProgState
+          acc.state = curr
           return acc
         }
 
