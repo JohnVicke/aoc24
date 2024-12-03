@@ -37,7 +37,7 @@ function writeTestInput(day: number) {
 
 function writeInput(day: number) {
   const inputPath = getInputPath("input", day)
-  return noFile(inputPath).andThen(() => fetchInput(day)).andThen((text) => writeFile(inputPath, text))
+  return noFile(inputPath).andThen(() => fetchInput(day)).andThen((text) => writeFile(inputPath, text)).map(() => "input done")
 }
 
 function getTemplate(day: number, type: "src" | "test") {
@@ -49,12 +49,12 @@ function getTemplate(day: number, type: "src" | "test") {
 
 function writeSrc(day: number) {
   const inputPath = getInputPath("src", day)
-  return noFile(inputPath).andThen(() => getTemplate(day, "src")).andThen((src) => writeFile(inputPath, src))
+  return noFile(inputPath).andThen(() => getTemplate(day, "src")).andThen((src) => writeFile(inputPath, src)).map(() => "src done")
 }
 
 function writeTest(day: number) {
   const inputPath = getInputPath("test", day)
-  return noFile(inputPath).andThen(() => getTemplate(day, "test")).andThen((test) => writeFile(inputPath, test))
+  return noFile(inputPath).andThen(() => getTemplate(day, "test")).andThen((test) => writeFile(inputPath, test)).map(() => "test done")
 }
 
 function writeDay(day: number) {
