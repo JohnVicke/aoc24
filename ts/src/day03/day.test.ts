@@ -10,7 +10,7 @@ describe("day03", () => {
   })
   describe("part 2", () => {
     it("should solve test input", async () => {
-      const result = (await Part2.run("test-input"))._unsafeUnwrap()
+      const result = (await Part2.run("test-input-2"))._unsafeUnwrap()
       expect(result).toEqual(Part2.testResult)
     })
   })
