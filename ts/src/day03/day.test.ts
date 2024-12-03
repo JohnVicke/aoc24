@@ -1,7 +1,7 @@
 import { describe, it, expect } from "bun:test"
 import { Part1, Part2 } from "./day"
 
-describe("day02", () => {
+describe("day03", () => {
   describe("part 1", () => {
     it("should solve test input", async () => {
       const result = (await Part1.run("test-input"))._unsafeUnwrap()
