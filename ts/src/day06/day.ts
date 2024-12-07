@@ -80,11 +80,11 @@ export namespace Part1 {
         position = [nextRow, nextCol]
         visited.add(`${nextRow},${nextCol}`)
 
-        if (process.env.NODE_ENV === "test") {
-
-          printGrid(grid, position, visited);
-          await new Promise((resolve) => setTimeout(resolve, 100))
-        }
+        // if (process.env.NODE_ENV === "test") {
+        //
+        //   printGrid(grid, position, visited);
+        //   await new Promise((resolve) => setTimeout(resolve, 100))
+        // }
 
       }
 
