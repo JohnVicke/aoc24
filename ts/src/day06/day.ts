@@ -94,7 +94,7 @@ export namespace Part1 {
 }
 
 export namespace Part2 {
-  export const testResult = -1
+  export const testResult = 6
 
   type Visited = `${number},${number},${Direction}`
 
@@ -105,31 +105,31 @@ export namespace Part2 {
       let pos = position
       let dir = direction
 
-
       while (true) {
         const key = `${pos[0]},${pos[1]},${dir}` as Visited
 
+        // Check if we've been in this exact state before
         if (visited.has(key)) {
-          return true
+          return "loop" as const
         }
-
         visited.add(key)
 
-        const [nextRow, nextCol] = move(direction, position)
+        const [nextRow, nextCol] = move(dir, pos)
 
-        if (nextRow < 0 || nextRow >= grid.length || nextCol < 0 || nextCol >= grid[nextRow].length) {
-          break;
+        // Check if out of bounds
+        if (nextRow < 0 || nextRow >= grid.length ||
+          nextCol < 0 || nextCol >= grid[nextRow].length) {
+          return "not-loop" as const
         }
 
+        // If blocked, turn right
         if (grid[nextRow][nextCol] === "#") {
-          direction = turnRight(direction)
+          dir = turnRight(dir)
+        } else {
+          // Move forward if not blocked
+          pos = [nextRow, nextCol]
         }
-
-        pos = [nextRow, nextCol]
-
       }
-
-      return false
     }
 
     return readFile(fileName).map(parseGrid).map(async (grid) => {
@@ -149,7 +149,10 @@ export namespace Part2 {
 
           grid[row][col] = "#"
 
-          if (runSimulation(grid, position, direction)) {
+          const outcome = runSimulation(grid, position, direction)
+
+
+          if (outcome === "loop") {
             validPositions.add(`${row},${col}`)
           }
 
@@ -175,6 +178,7 @@ if (process.env.NODE_ENV !== "test") {
 
 
   const testResult2 = (await Part2.run("test-input"))._unsafeUnwrap()
+  console.log(testResult2)
   if (testResult2 === Part2.testResult) {
     const result = (await Part2.run("input"))._unsafeUnwrap()
     console.log({ part2: result })
